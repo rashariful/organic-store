@@ -52,7 +52,7 @@ export function Header() {
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input 
                   placeholder="Search for organic honey, ghee, oils, nuts..." 
-                  className="pl-10 h-12 bg-muted/50 border-0 focus-visible:ring-2 focus-visible:ring-primary"
+                  className="pl-10 h-12 bg-muted/50 border ring-primary-foreground focus-visible:ring-2 focus-visible:ring-primary"
                 />
                 <Button size="sm" className="absolute right-2 top-1/2 -translate-y-1/2">
                   Search
