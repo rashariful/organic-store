@@ -1,3 +1,4 @@
+import honey from "@/assets/organic-honey.jpg"
 export interface Product {
   id: string;
   name: string;
@@ -19,7 +20,7 @@ export const PRODUCTS: Product[] = [
     name: 'Pure Wildflower Honey',
     price: 24.99,
     originalPrice: 29.99,
-    image: 'organic-honey.jpg',
+    image: honey,
     category: 'honey',
     description: 'Raw, unprocessed wildflower honey sourced directly from local organic beekeepers. Rich in antioxidants and natural enzymes.',
     benefits: ['Rich in antioxidants', 'Natural energy boost', 'Antibacterial properties', 'Supports digestive health'],
