@@ -2,6 +2,15 @@ import honey from "@/assets/organic-honey.jpg"
 import ghee from "@/assets/organic-ghee.jpg"
 import mustard from "@/assets/mustard-oil.jpg"
 import farm from "@/assets/organic-farm-hero.jpg"
+import tumeric from "@/assets/turmeric_powder.webp"
+import garam from "@/assets/organic_garam_masala.webp"
+import rice from "@/assets/premium_basmati_rice.jpg"
+import coconut from "@/assets/Organic-Virgin-Coconut-Oil.jpg"
+import almond from "@/assets/raw-almonds.png"
+import salt from "@/assets/Himalayan Pink Salt.jpg"
+import caches from "@/assets/Cashew_apples.jpg"
+import tea from "@/assets/dehydrated-tea-thumb_1024x.jpg"
+import jaggery from "@/assets/Organic Jaggery.webp"
 export interface Product {
   id: string;
   name: string;
@@ -63,7 +72,7 @@ export const PRODUCTS: Product[] = [
     id: '4',
     name: 'Raw Almonds',
     price: 28.99,
-    image: farm,
+    image: almond,
     category: 'nuts',
     description: 'Premium quality raw almonds, naturally grown without pesticides. Perfect for snacking or adding to your recipes.',
     benefits: ['High in protein and fiber', 'Rich in vitamin E', 'Supports brain health', 'Heart-healthy fats'],
@@ -76,7 +85,7 @@ export const PRODUCTS: Product[] = [
     id: '5',
     name: 'Turmeric Powder',
     price: 12.99,
-    image: '/placeholder.svg',
+    image: tumeric,
     category: 'powders',
     description: 'Fresh ground turmeric powder from organically grown turmeric roots. Known for its anti-inflammatory properties.',
     benefits: ['Natural anti-inflammatory', 'Rich in curcumin', 'Supports immune system', 'Traditional healing spice'],
@@ -89,7 +98,7 @@ export const PRODUCTS: Product[] = [
     id: '6',
     name: 'Organic Garam Masala',
     price: 15.99,
-    image: '/placeholder.svg',
+    image: garam,
     category: 'spices',
     description: 'Aromatic blend of traditional Indian spices, freshly ground and perfectly balanced for authentic flavors.',
     benefits: ['Digestive aid', 'Rich in antioxidants', 'Enhances metabolism', 'Traditional spice blend'],
@@ -104,7 +113,7 @@ export const PRODUCTS: Product[] = [
     name: 'Premium Basmati Rice',
     price: 19.99,
     originalPrice: 24.99,
-    image: '/placeholder.svg',
+    image: rice,
     category: 'grains',
     description: 'Aged organic basmati rice with long grains and aromatic fragrance. Perfect for biryanis and pilafs.',
     benefits: ['High in fiber', 'Gluten-free', 'Long grain variety', 'Aged for better taste'],
@@ -117,7 +126,7 @@ export const PRODUCTS: Product[] = [
     id: '8',
     name: 'Himalayan Pink Salt',
     price: 14.99,
-    image: '/placeholder.svg',
+    image: salt,
     category: 'spices',
     description: 'Pure Himalayan pink salt crystals, naturally mined and rich in essential minerals.',
     benefits: ['Rich in minerals', 'Natural detoxifier', 'Supports hydration', 'Pure and unprocessed'],
@@ -131,7 +140,7 @@ export const PRODUCTS: Product[] = [
     name: 'Organic Coconut Oil',
     price: 22.99,
     originalPrice: 26.99,
-    image: '/placeholder.svg',
+    image: coconut,
     category: 'oils',
     description: 'Cold-pressed virgin coconut oil with natural coconut aroma. Perfect for cooking and skincare.',
     benefits: ['High in MCTs', 'Natural moisturizer', 'Antimicrobial properties', 'Heart-healthy'],
@@ -144,7 +153,7 @@ export const PRODUCTS: Product[] = [
     id: '10',
     name: 'Raw Cashews',
     price: 34.99,
-    image: '/placeholder.svg',
+    image: caches,
     category: 'nuts',
     description: 'Premium quality raw cashews, naturally sweet and creamy. Perfect for snacking and cooking.',
     benefits: ['Rich in healthy fats', 'Good source of protein', 'Contains magnesium', 'Heart-healthy'],
@@ -157,7 +166,7 @@ export const PRODUCTS: Product[] = [
     id: '11',
     name: 'Organic Jaggery',
     price: 11.99,
-    image: '/placeholder.svg',
+    image: jaggery,
     category: 'honey',
     description: 'Traditional organic jaggery made from sugarcane. A healthy alternative to refined sugar.',
     benefits: ['Rich in iron', 'Natural sweetener', 'Aids digestion', 'Traditional superfood'],
@@ -170,7 +179,7 @@ export const PRODUCTS: Product[] = [
     id: '12',
     name: 'Herbal Tea Blend',
     price: 16.99,
-    image: '/placeholder.svg',
+    image: tea,
     category: 'powders',
     description: 'Soothing herbal tea blend with chamomile, tulsi, and ginger. Perfect for relaxation.',
     benefits: ['Stress relief', 'Improves digestion', 'Natural antioxidants', 'Caffeine-free'],
