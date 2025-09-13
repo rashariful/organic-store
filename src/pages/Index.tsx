@@ -5,11 +5,15 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ProductCard } from '@/components/ProductCard';
-import { PRODUCTS, CATEGORIES } from '@/lib/products';
+import { PRODUCTS, CATEGORIES, getTopSellingProducts, getHotProducts, getBestPriceProducts, getBestProducts } from '@/lib/products';
 import heroImage from '@/assets/organic-farm-hero.jpg';
 
 const Index = () => {
   const featuredProducts = PRODUCTS.filter(product => product.featured);
+  const topSellingProducts = getTopSellingProducts();
+  const hotProducts = getHotProducts();
+  const bestPriceProducts = getBestPriceProducts();
+  const bestProducts = getBestProducts();
 
   return (
     <div className="min-h-screen">
@@ -76,6 +80,63 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Top Selling Products */}
+      <section className="py-16 bg-muted">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-primary text-primary-foreground">Top Selling</Badge>
+            <h2 className="text-4xl font-bold mb-4">Customer Favorites</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Most loved organic products by our happy customers
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {topSellingProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Hot Products - Limited Time Offers */}
+      <section className="py-16 bg-gradient-organic">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-sage-green text-forest-green">🔥 Hot Deals</Badge>
+            <h2 className="text-4xl font-bold text-natural-white mb-4">Limited Time Offers</h2>
+            <p className="text-xl text-cream max-w-2xl mx-auto">
+              Grab these amazing deals before they're gone!
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {hotProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Best Price Products */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-accent text-accent-foreground">💰 Best Value</Badge>
+            <h2 className="text-4xl font-bold mb-4">Unbeatable Prices</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Premium quality at prices that won't break the bank
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {bestPriceProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Categories */}
       <section className="py-16 bg-sage-green">
         <div className="container mx-auto px-4">
@@ -100,6 +161,25 @@ const Index = () => {
                   </CardContent>
                 </Card>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Best Products - Premium Selection */}
+      <section className="py-16 bg-natural-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-forest-green text-natural-white">⭐ Premium Selection</Badge>
+            <h2 className="text-4xl font-bold mb-4">Best Organic Products</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Handpicked premium organic products that represent the finest quality
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {bestProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </div>

@@ -4,7 +4,7 @@ export interface Product {
   price: number;
   originalPrice?: number;
   image: string;
-  category: 'honey' | 'oils' | 'ghee' | 'nuts' | 'powders' | 'spices';
+  category: 'honey' | 'oils' | 'ghee' | 'nuts' | 'powders' | 'spices' | 'grains';
   description: string;
   benefits: string[];
   weight: string;
@@ -94,7 +94,94 @@ export const PRODUCTS: Product[] = [
     featured: false,
     organic: true,
   },
+  // Additional products for more sections
+  {
+    id: '7',
+    name: 'Premium Basmati Rice',
+    price: 19.99,
+    originalPrice: 24.99,
+    image: '/placeholder.svg',
+    category: 'grains',
+    description: 'Aged organic basmati rice with long grains and aromatic fragrance. Perfect for biryanis and pilafs.',
+    benefits: ['High in fiber', 'Gluten-free', 'Long grain variety', 'Aged for better taste'],
+    weight: '1kg',
+    inStock: true,
+    featured: false,
+    organic: true,
+  },
+  {
+    id: '8',
+    name: 'Himalayan Pink Salt',
+    price: 14.99,
+    image: '/placeholder.svg',
+    category: 'spices',
+    description: 'Pure Himalayan pink salt crystals, naturally mined and rich in essential minerals.',
+    benefits: ['Rich in minerals', 'Natural detoxifier', 'Supports hydration', 'Pure and unprocessed'],
+    weight: '500g',
+    inStock: true,
+    featured: false,
+    organic: true,
+  },
+  {
+    id: '9',
+    name: 'Organic Coconut Oil',
+    price: 22.99,
+    originalPrice: 26.99,
+    image: '/placeholder.svg',
+    category: 'oils',
+    description: 'Cold-pressed virgin coconut oil with natural coconut aroma. Perfect for cooking and skincare.',
+    benefits: ['High in MCTs', 'Natural moisturizer', 'Antimicrobial properties', 'Heart-healthy'],
+    weight: '500ml',
+    inStock: true,
+    featured: false,
+    organic: true,
+  },
+  {
+    id: '10',
+    name: 'Raw Cashews',
+    price: 34.99,
+    image: '/placeholder.svg',
+    category: 'nuts',
+    description: 'Premium quality raw cashews, naturally sweet and creamy. Perfect for snacking and cooking.',
+    benefits: ['Rich in healthy fats', 'Good source of protein', 'Contains magnesium', 'Heart-healthy'],
+    weight: '500g',
+    inStock: true,
+    featured: false,
+    organic: true,
+  },
+  {
+    id: '11',
+    name: 'Organic Jaggery',
+    price: 11.99,
+    image: '/placeholder.svg',
+    category: 'honey',
+    description: 'Traditional organic jaggery made from sugarcane. A healthy alternative to refined sugar.',
+    benefits: ['Rich in iron', 'Natural sweetener', 'Aids digestion', 'Traditional superfood'],
+    weight: '1kg',
+    inStock: true,
+    featured: false,
+    organic: true,
+  },
+  {
+    id: '12',
+    name: 'Herbal Tea Blend',
+    price: 16.99,
+    image: '/placeholder.svg',
+    category: 'powders',
+    description: 'Soothing herbal tea blend with chamomile, tulsi, and ginger. Perfect for relaxation.',
+    benefits: ['Stress relief', 'Improves digestion', 'Natural antioxidants', 'Caffeine-free'],
+    weight: '100g',
+    inStock: true,
+    featured: false,
+    organic: true,
+  },
 ];
+
+// Helper functions to categorize products
+export const getTopSellingProducts = () => PRODUCTS.slice(0, 6);
+export const getHotProducts = () => PRODUCTS.filter(p => p.originalPrice).slice(0, 4);
+export const getBestPriceProducts = () => PRODUCTS.filter(p => p.price < 20).slice(0, 4);
+export const getBestProducts = () => PRODUCTS.filter(p => p.organic && p.inStock).slice(0, 6);
 
 export const CATEGORIES = [
   { id: 'honey', name: 'Honey & Sweeteners', icon: '🍯' },
