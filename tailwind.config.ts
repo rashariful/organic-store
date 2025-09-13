@@ -47,6 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Organic theme colors
+        "forest-green": "hsl(var(--forest-green))",
+        "sage-green": "hsl(var(--sage-green))",
+        "warm-brown": "hsl(var(--warm-brown))",
+        "cream": "hsl(var(--cream))",
+        "natural-white": "hsl(var(--natural-white))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -62,6 +68,16 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      backgroundImage: {
+        "gradient-organic": "var(--gradient-organic)",
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-card": "var(--gradient-card)",
+      },
+      boxShadow: {
+        "organic": "var(--shadow-organic)",
+        "card": "var(--shadow-card)",
+        "hover": "var(--shadow-hover)",
       },
       keyframes: {
         "accordion-down": {
