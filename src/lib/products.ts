@@ -1,4 +1,7 @@
 import honey from "@/assets/organic-honey.jpg"
+import ghee from "@/assets/organic-ghee.jpg"
+import mustard from "@/assets/mustard-oil.jpg"
+import farm from "@/assets/organic-farm-hero.jpg"
 export interface Product {
   id: string;
   name: string;
@@ -33,7 +36,7 @@ export const PRODUCTS: Product[] = [
     id: '2',
     name: 'Traditional Ghee',
     price: 32.99,
-    image: 'organic-ghee.jpg',
+    image: ghee,
     category: 'ghee',
     description: 'Premium quality ghee made from grass-fed cow milk using traditional churning methods. Rich, golden, and aromatic.',
     benefits: ['High smoke point for cooking', 'Rich in vitamins A, D, E, K', 'Supports healthy digestion', 'Traditional Ayurvedic superfood'],
@@ -47,7 +50,7 @@ export const PRODUCTS: Product[] = [
     name: 'Cold-Pressed Mustard Oil',
     price: 18.99,
     originalPrice: 22.99,
-    image: 'mustard-oil.jpg',
+    image: mustard,
     category: 'oils',
     description: 'Authentic cold-pressed mustard oil with a distinctive pungent flavor. Perfect for traditional cooking and health benefits.',
     benefits: ['Rich in omega-3 fatty acids', 'Natural antibacterial properties', 'Supports heart health', 'Traditional cooking oil'],
@@ -60,7 +63,7 @@ export const PRODUCTS: Product[] = [
     id: '4',
     name: 'Raw Almonds',
     price: 28.99,
-    image: '/placeholder.svg',
+    image: farm,
     category: 'nuts',
     description: 'Premium quality raw almonds, naturally grown without pesticides. Perfect for snacking or adding to your recipes.',
     benefits: ['High in protein and fiber', 'Rich in vitamin E', 'Supports brain health', 'Heart-healthy fats'],
