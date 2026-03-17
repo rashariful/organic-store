@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 
 export function Header() {
   const { state, getTotalItems } = useStore();
+  console.log(state, getTotalItems)
 
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -93,14 +94,22 @@ export function Header() {
               <Link to="/cart" className="relative">
                 <Button variant="ghost" size="icon" className="h-12 w-12">
                   <ShoppingCart className="h-5 w-5" />
-                  {getTotalItems() > 0 && (
+                    {state.cart.length > 0 && (
+                    <Badge 
+                      variant="destructive" 
+                      className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs"
+                    >
+                      {state.cart.length}
+                    </Badge>
+                  )}
+                  {/* {getTotalItems() > 0 && (
                     <Badge 
                       variant="destructive" 
                       className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs"
                     >
                       {getTotalItems()}
                     </Badge>
-                  )}
+                  )} */}
                 </Button>
               </Link>
 
