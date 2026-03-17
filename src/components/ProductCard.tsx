@@ -6,18 +6,29 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Product } from '@/lib/products';
 import { useStore } from '@/contexts/StoreContext';
+import { useGtmEvents } from '@/hooks/useGtmEvents';
+
+
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { trackAddToCart } = useGtmEvents(); // ✅ add this
   const { addToCart, addToWishlist, state } = useStore();
   const isInWishlist = state.wishlist.some(item => item.id === product.id);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     addToCart(product);
+     // ✅ GTM EVENT FIRE
+    trackAddToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: product.quantity,
+    });
   };
 
   const handleAddToWishlist = (e: React.MouseEvent) => {

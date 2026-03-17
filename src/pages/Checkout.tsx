@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreditCard, Truck, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,11 +9,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useStore } from '@/contexts/StoreContext';
+import { useGtmEvents } from '@/hooks/useGtmEvents';
 
 const Checkout = () => {
   const { state, getTotalPrice, clearCart } = useStore();
+  const { trackInitialCheckout, trackPurchase } = useGtmEvents();
   const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
@@ -24,9 +28,26 @@ const Checkout = () => {
     zipCode: '',
     phone: '',
     deliveryMethod: 'standard',
-    paymentMethod: 'card',
+    paymentMethod: 'cod',
   });
 
+  // ✅ CALCULATIONS
+  const subtotal = getTotalPrice();
+  const tax = subtotal * 0.08;
+  const shipping = formData.deliveryMethod === 'express' ? 9.99 : 0;
+  const total = subtotal + tax + shipping;
+
+  // ✅ BEGIN CHECKOUT (ONLY ON PAGE LOAD)
+  useEffect(() => {
+    if (state.cart.length === 0) return;
+
+    trackInitialCheckout({
+      total,
+      items: state.cart,
+    });
+  }, []);
+
+  // ✅ INPUT HANDLER
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -35,24 +56,31 @@ const Checkout = () => {
     }));
   };
 
+  // ✅ ORDER SUBMIT + PURCHASE TRACKING
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate order processing
     setTimeout(() => {
-      console.log('Order Successful');
+      const orderId = Date.now().toString();
+
+      console.log('✅ Order Successful');
+
+      // 🔥 PURCHASE EVENT (GA4 SAFE)
+      trackPurchase({
+        order_id: orderId,
+        value: total,
+        items: state.cart,
+      });
+
       clearCart();
       setIsLoading(false);
+
       navigate('/order-confirmation');
-    }, 2000);
+    }, 1500);
   };
 
-  const subtotal = getTotalPrice();
-  const tax = subtotal * 0.08;
-  const shipping = formData.deliveryMethod === 'express' ? 9.99 : 0;
-  const total = subtotal + tax + shipping;
-
+  // ✅ EMPTY CART REDIRECT
   if (state.cart.length === 0) {
     navigate('/cart');
     return null;
@@ -63,8 +91,10 @@ const Checkout = () => {
       <h1 className="text-3xl font-bold mb-8">Checkout</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Checkout Form */}
+        {/* LEFT SIDE */}
         <div className="space-y-6">
+
+          {/* DELIVERY INFO */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -73,105 +103,37 @@ const Checkout = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
+                <Input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleInputChange} required />
+                <Input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleInputChange} required />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="address">Address</Label>
-                <Input
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+              <Input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleInputChange} required />
+              <Input name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleInputChange} required />
+              <Input name="address" placeholder="Address" value={formData.address} onChange={handleInputChange} required />
 
               <div className="grid grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="city">City</Label>
-                  <Input
-                    id="city"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="state">State</Label>
-                  <Select value={formData.state} onValueChange={(value) => 
-                    setFormData(prev => ({ ...prev, state: value }))
-                  }>
-                    <SelectTrigger>
-                      <SelectValue placeholder="State" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="ca">California</SelectItem>
-                      <SelectItem value="ny">New York</SelectItem>
-                      <SelectItem value="tx">Texas</SelectItem>
-                      <SelectItem value="fl">Florida</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="zipCode">ZIP Code</Label>
-                  <Input
-                    id="zipCode"
-                    name="zipCode"
-                    value={formData.zipCode}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
+                <Input name="city" placeholder="City" value={formData.city} onChange={handleInputChange} required />
+
+                <Select value={formData.state} onValueChange={(value) => setFormData(prev => ({ ...prev, state: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="State" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="dhaka">Dhaka</SelectItem>
+                    <SelectItem value="chittagong">Chittagong</SelectItem>
+                    <SelectItem value="sylhet">Sylhet</SelectItem>
+                    <SelectItem value="khulna">Khulna</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Input name="zipCode" placeholder="ZIP" value={formData.zipCode} onChange={handleInputChange} required />
               </div>
             </CardContent>
           </Card>
 
+          {/* DELIVERY METHOD */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -180,28 +142,20 @@ const Checkout = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <RadioGroup 
-                value={formData.deliveryMethod}
-                onValueChange={(value) => 
-                  setFormData(prev => ({ ...prev, deliveryMethod: value }))
-                }
-              >
+              <RadioGroup value={formData.deliveryMethod} onValueChange={(value) => setFormData(prev => ({ ...prev, deliveryMethod: value }))}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="standard" id="standard" />
-                  <Label htmlFor="standard" className="flex-1 cursor-pointer">
-                    Standard Delivery (3-5 days) - Free
-                  </Label>
+                  <Label htmlFor="standard">Standard (Free)</Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="express" id="express" />
-                  <Label htmlFor="express" className="flex-1 cursor-pointer">
-                    Express Delivery (1-2 days) - $9.99
-                  </Label>
+                  <Label htmlFor="express">Express ($9.99)</Label>
                 </div>
               </RadioGroup>
             </CardContent>
           </Card>
 
+          {/* PAYMENT */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -210,82 +164,65 @@ const Checkout = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <RadioGroup 
-                value={formData.paymentMethod}
-                onValueChange={(value) => 
-                  setFormData(prev => ({ ...prev, paymentMethod: value }))
-                }
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="card" id="card" />
-                  <Label htmlFor="card" className="flex-1 cursor-pointer">
-                    Credit/Debit Card
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="paypal" id="paypal" />
-                  <Label htmlFor="paypal" className="flex-1 cursor-pointer">
-                    PayPal
-                  </Label>
-                </div>
+              <RadioGroup value={formData.paymentMethod} onValueChange={(value) => setFormData(prev => ({ ...prev, paymentMethod: value }))}>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="cod" id="cod" />
-                  <Label htmlFor="cod" className="flex-1 cursor-pointer">
-                    Cash on Delivery
-                  </Label>
+                  <Label htmlFor="cod">Cash on Delivery</Label>
                 </div>
               </RadioGroup>
             </CardContent>
           </Card>
+
         </div>
 
-        {/* Order Summary */}
-        <div className="lg:col-span-1">
+        {/* RIGHT SIDE */}
+        <div>
           <Card className="sticky top-24">
             <CardHeader>
               <CardTitle>Order Summary</CardTitle>
             </CardHeader>
+
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                {state.cart.map((item) => (
-                  <div key={item.id} className="flex justify-between text-sm">
-                    <span>{item.name} × {item.quantity}</span>
-                    <span>${(item.price * item.quantity).toFixed(2)}</span>
-                  </div>
-                ))}
-              </div>
-              
+
+              {state.cart.map((item) => (
+                <div key={item.id} className="flex justify-between text-sm">
+                  <span>{item.name} × {item.quantity}</span>
+                  <span>${(item.price * item.quantity).toFixed(2)}</span>
+                </div>
+              ))}
+
               <Separator />
-              
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Shipping</span>
-                  <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Tax</span>
-                  <span>${tax.toFixed(2)}</span>
-                </div>
+
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span>${subtotal.toFixed(2)}</span>
               </div>
-              
+
+              <div className="flex justify-between">
+                <span>Shipping</span>
+                <span>{shipping === 0 ? 'Free' : `$${shipping}`}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>Tax</span>
+                <span>${tax.toFixed(2)}</span>
+              </div>
+
               <Separator />
-              
-              <div className="flex justify-between text-lg font-bold">
+
+              <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
                 <span>${total.toFixed(2)}</span>
               </div>
-              
+
               <Button
                 onClick={handleSubmit}
-                className="w-full bg-gradient-organic"
                 disabled={isLoading}
+                className="w-full"
               >
-                {isLoading ? 'Processing...' : `Place Order - $${total.toFixed(2)}`}
+                {isLoading ? 'Processing...' : `Place Order`}
               </Button>
+
             </CardContent>
           </Card>
         </div>

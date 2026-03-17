@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { ArrowLeft, Heart, ShoppingCart, Shield, Truck, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,8 +7,18 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { PRODUCTS } from '@/lib/products';
 import { useStore } from '@/contexts/StoreContext';
+import { useGtmEvents } from '@/hooks/useGtmEvents';
 
 const ProductDetail = () => {
+  const { trackContentView } = useGtmEvents();
+useEffect(() => {
+  trackContentView({
+    id: product.id,
+    name: product.name,
+    price: product.price,
+  });
+}, []);
+
   const { id } = useParams();
   const { addToCart, addToWishlist, state } = useStore();
   
@@ -19,6 +29,7 @@ const ProductDetail = () => {
   }
 
   const isInWishlist = state.wishlist.some(item => item.id === product.id);
+
 
   return (
     <div className="container mx-auto px-4 py-8">

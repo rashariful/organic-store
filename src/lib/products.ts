@@ -16,6 +16,7 @@ export interface Product {
   name: string;
   price: number;
   originalPrice?: number;
+  quantity?: number;
   image: string;
   category: 'honey' | 'oils' | 'ghee' | 'nuts' | 'powders' | 'spices' | 'grains';
   description: string;
