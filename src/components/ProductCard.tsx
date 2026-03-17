@@ -15,7 +15,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const { trackAddToCart } = useGtmEvents(); // ✅ add this
+  const { trackAddToCart,trackAddToWishlist } = useGtmEvents(); // ✅ add this
   const { addToCart, addToWishlist, state } = useStore();
   const isInWishlist = state.wishlist.some(item => item.id === product.id);
 
@@ -34,6 +34,12 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleAddToWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
     addToWishlist(product);
+    trackAddToWishlist({
+  id: product.id,
+  name: product.name,
+  price: product.price,
+  category: product.category,
+});
   };
 
   return (

@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CreditCard, Truck, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useStore } from '@/contexts/StoreContext';
-import { useGtmEvents } from '@/hooks/useGtmEvents';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { CreditCard, Truck, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useStore } from "@/contexts/StoreContext";
+import { useGtmEvents } from "@/hooks/useGtmEvents";
 
 const Checkout = () => {
   const { state, getTotalPrice, clearCart } = useStore();
@@ -19,22 +25,22 @@ const Checkout = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    email: '',
-    firstName: '',
-    lastName: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    phone: '',
-    deliveryMethod: 'standard',
-    paymentMethod: 'cod',
+    email: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    phone: "",
+    deliveryMethod: "standard",
+    paymentMethod: "cod",
   });
 
   // ✅ CALCULATIONS
   const subtotal = getTotalPrice();
   const tax = subtotal * 0.08;
-  const shipping = formData.deliveryMethod === 'express' ? 9.99 : 0;
+  const shipping = formData.deliveryMethod === "express" ? 9.99 : 0;
   const total = subtotal + tax + shipping;
 
   // ✅ BEGIN CHECKOUT (ONLY ON PAGE LOAD)
@@ -50,7 +56,7 @@ const Checkout = () => {
   // ✅ INPUT HANDLER
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -64,25 +70,29 @@ const Checkout = () => {
     setTimeout(() => {
       const orderId = Date.now().toString();
 
-      console.log('✅ Order Successful');
+      console.log("✅ Order Successful");
 
       // 🔥 PURCHASE EVENT (GA4 SAFE)
       trackPurchase({
         order_id: orderId,
         value: total,
         items: state.cart,
+
+        customer_name: formData.firstName + " " + formData.lastName,
+        phone_number: formData.phone,
+        delivery_area: formData.city,
       });
 
       clearCart();
       setIsLoading(false);
 
-      navigate('/order-confirmation');
+      navigate("/order-confirmation");
     }, 1500);
   };
 
   // ✅ EMPTY CART REDIRECT
   if (state.cart.length === 0) {
-    navigate('/cart');
+    navigate("/cart");
     return null;
   }
 
@@ -93,7 +103,6 @@ const Checkout = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* LEFT SIDE */}
         <div className="space-y-6">
-
           {/* DELIVERY INFO */}
           <Card>
             <CardHeader>
@@ -103,20 +112,61 @@ const Checkout = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-
               <div className="grid grid-cols-2 gap-4">
-                <Input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleInputChange} required />
-                <Input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleInputChange} required />
+                <Input
+                  name="firstName"
+                  placeholder="First Name"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  required
+                />
+                <Input
+                  name="lastName"
+                  placeholder="Last Name"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
 
-              <Input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleInputChange} required />
-              <Input name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleInputChange} required />
-              <Input name="address" placeholder="Address" value={formData.address} onChange={handleInputChange} required />
+              <Input
+                name="email"
+                type="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
+              <Input
+                name="phone"
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={handleInputChange}
+                required
+              />
+              <Input
+                name="address"
+                placeholder="Address"
+                value={formData.address}
+                onChange={handleInputChange}
+                required
+              />
 
               <div className="grid grid-cols-3 gap-4">
-                <Input name="city" placeholder="City" value={formData.city} onChange={handleInputChange} required />
+                <Input
+                  name="city"
+                  placeholder="City"
+                  value={formData.city}
+                  onChange={handleInputChange}
+                  required
+                />
 
-                <Select value={formData.state} onValueChange={(value) => setFormData(prev => ({ ...prev, state: value }))}>
+                <Select
+                  value={formData.state}
+                  onValueChange={(value) =>
+                    setFormData((prev) => ({ ...prev, state: value }))
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="State" />
                   </SelectTrigger>
@@ -128,7 +178,13 @@ const Checkout = () => {
                   </SelectContent>
                 </Select>
 
-                <Input name="zipCode" placeholder="ZIP" value={formData.zipCode} onChange={handleInputChange} required />
+                <Input
+                  name="zipCode"
+                  placeholder="ZIP"
+                  value={formData.zipCode}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
             </CardContent>
           </Card>
@@ -142,7 +198,12 @@ const Checkout = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <RadioGroup value={formData.deliveryMethod} onValueChange={(value) => setFormData(prev => ({ ...prev, deliveryMethod: value }))}>
+              <RadioGroup
+                value={formData.deliveryMethod}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({ ...prev, deliveryMethod: value }))
+                }
+              >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="standard" id="standard" />
                   <Label htmlFor="standard">Standard (Free)</Label>
@@ -164,7 +225,12 @@ const Checkout = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <RadioGroup value={formData.paymentMethod} onValueChange={(value) => setFormData(prev => ({ ...prev, paymentMethod: value }))}>
+              <RadioGroup
+                value={formData.paymentMethod}
+                onValueChange={(value) =>
+                  setFormData((prev) => ({ ...prev, paymentMethod: value }))
+                }
+              >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="cod" id="cod" />
                   <Label htmlFor="cod">Cash on Delivery</Label>
@@ -172,7 +238,6 @@ const Checkout = () => {
               </RadioGroup>
             </CardContent>
           </Card>
-
         </div>
 
         {/* RIGHT SIDE */}
@@ -183,10 +248,11 @@ const Checkout = () => {
             </CardHeader>
 
             <CardContent className="space-y-4">
-
               {state.cart.map((item) => (
                 <div key={item.id} className="flex justify-between text-sm">
-                  <span>{item.name} × {item.quantity}</span>
+                  <span>
+                    {item.name} × {item.quantity}
+                  </span>
                   <span>${(item.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
@@ -200,7 +266,7 @@ const Checkout = () => {
 
               <div className="flex justify-between">
                 <span>Shipping</span>
-                <span>{shipping === 0 ? 'Free' : `$${shipping}`}</span>
+                <span>{shipping === 0 ? "Free" : `$${shipping}`}</span>
               </div>
 
               <div className="flex justify-between">
@@ -220,9 +286,8 @@ const Checkout = () => {
                 disabled={isLoading}
                 className="w-full"
               >
-                {isLoading ? 'Processing...' : `Place Order`}
+                {isLoading ? "Processing..." : `Place Order`}
               </Button>
-
             </CardContent>
           </Card>
         </div>

@@ -12,7 +12,7 @@ export const useGtmEvents = () => {
   useEffect(() => {
     const url = location.pathname + location.search;
 
-    console.log("📄 GTM page_view:", url);
+    // console.log("📄 GTM page_view:", url);
 
     pushToDataLayer("page_view", {
       page_path: url,
@@ -21,11 +21,10 @@ export const useGtmEvents = () => {
 
   // 🔹 Generic
   const trackEvent = (event: string, data?: GTMEventData) => {
-    console.log(`📊 GTM Event: ${event}`, data);
+    // console.log(`📊 GTM Event: ${event}`, data);
 
     pushToDataLayer(event, data);
   };
-
   // 🔹 VIEW ITEM
   const trackContentView = (product: {
     id: string;
@@ -44,7 +43,6 @@ export const useGtmEvents = () => {
       },
     });
   };
-
   // 🔹 ADD TO CART
   const trackAddToCart = (product: {
     id: string;
@@ -65,7 +63,35 @@ export const useGtmEvents = () => {
       },
     });
   };
+const trackAddToWishlist = (product: {
+  id: string;
+  name: string;
+  price: number;
+  category?: string;
+}) => {
+  const payload = {
+    event: "add_to_wishlist",
 
+    ecommerce: {
+      currency: "BDT",
+      value: product.price,
+      items: [
+        {
+          item_id: product.id,
+          item_name: product.name,
+          price: product.price,
+          item_category: product.category || "general",
+          quantity: 1,
+        },
+      ],
+    },
+  };
+
+  // console.log("💖 GTM WISHLIST EVENT:", payload);
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(payload);
+};
   // 🔹 BEGIN CHECKOUT
   const trackInitialCheckout = (cart: {
     total: number;
@@ -112,7 +138,7 @@ export const useGtmEvents = () => {
       delivery_area: order.delivery_area,
     };
 
-    console.log("💰 GTM PURCHASE EVENT:", payload);
+    // console.log("💰 GTM PURCHASE EVENT:", payload);
 
     pushToDataLayer("purchase", payload);
   };
@@ -121,6 +147,7 @@ export const useGtmEvents = () => {
     trackEvent,
     trackContentView,
     trackAddToCart,
+    trackAddToWishlist,
     trackInitialCheckout,
     trackPurchase,
   };

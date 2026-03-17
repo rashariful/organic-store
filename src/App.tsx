@@ -18,6 +18,7 @@ import NotFound from "./pages/NotFound";
 import { useGtmEvents } from "./hooks/useGtmEvents";
 import { useEffect } from "react";
 import { initGTM } from "./lib/gtm";
+import OrderConfirmation from "./pages/OrderConfirmation";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ return (
                 <Route path="/auth/login" element={<Login />} />
                 <Route path="/auth/register" element={<Register />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/order-confirmation" element={<OrderConfirmation />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
