@@ -38,10 +38,13 @@ const Checkout = () => {
   });
 
   // ✅ CALCULATIONS
-  const subtotal = getTotalPrice();
-  const tax = subtotal * 0.08;
-  const shipping = formData.deliveryMethod === "express" ? 9.99 : 0;
-  const total = subtotal + tax + shipping;
+const subtotal = getTotalPrice();
+
+const tax = Number((subtotal * 0.08).toFixed(2));
+
+const shipping = formData.deliveryMethod === "express" ? 9.99 : 0;
+
+const total = Number((subtotal + tax + shipping).toFixed(2));
 
   // ✅ BEGIN CHECKOUT (ONLY ON PAGE LOAD)
   useEffect(() => {
