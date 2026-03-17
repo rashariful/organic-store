@@ -28,7 +28,8 @@ export function ProductCard({ product }: ProductCardProps) {
       name: product.name,
       price: product.price,
       quantity: product.quantity,
-    });
+  category: product.category,   
+ });
   };
 
   const handleAddToWishlist = (e: React.MouseEvent) => {

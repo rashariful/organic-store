@@ -30,6 +30,7 @@ export const useGtmEvents = () => {
     id: string;
     name?: string;
     price?: number;
+    category?: string;
   }) => {
     trackEvent("view_item", {
       ecommerce: {
@@ -38,6 +39,7 @@ export const useGtmEvents = () => {
             item_id: product.id,
             item_name: product.name,
             price: product.price,
+             item_category: product.category || "general",
           },
         ],
       },
@@ -49,6 +51,7 @@ export const useGtmEvents = () => {
     name: string;
     price: number;
     quantity?: number;
+    category?: string;
   }) => {
     trackEvent("add_to_cart", {
       ecommerce: {
@@ -58,6 +61,7 @@ export const useGtmEvents = () => {
             item_name: product.name,
             price: product.price,
             quantity: product.quantity || 1,
+            item_category: product.category || "general",
           },
         ],
       },
@@ -106,6 +110,7 @@ const trackAddToWishlist = (product: {
           item_name: item.name,
           price: item.price,
           quantity: item.quantity,
+           item_category: item.category || "general",
         })),
       },
     });
@@ -131,6 +136,7 @@ const trackAddToWishlist = (product: {
           item_name: item.name,
           price: item.price,
           quantity: item.quantity,
+           item_category: item.category || "general",
         })),
       },
       customer_name: order.customer_name,
