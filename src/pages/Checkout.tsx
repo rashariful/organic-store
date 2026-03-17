@@ -249,11 +249,37 @@ const Checkout = () => {
 
             <CardContent className="space-y-4">
               {state.cart.map((item) => (
-                <div key={item.id} className="flex justify-between text-sm">
-                  <span>
-                    {item.name} × {item.quantity}
-                  </span>
-                  <span>${(item.price * item.quantity).toFixed(2)}</span>
+                <div
+                  key={item.id}
+                  className="flex items-center justify-between gap-4 text-sm"
+                >
+                  {/* Left Side */}
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={item.image}
+                      className="w-14 h-14 object-cover rounded-lg border"
+                      alt={item.name}
+                    />
+
+                    <div className="flex flex-col">
+                      {/* 🔥 Product Link */}
+                      <a
+                        href={`/products/${item.id}`}
+                        className="font-medium transition-all duration-200 hover:underline hover:text-primary"
+                      >
+                        {item.name}
+                      </a>
+
+                      <span className="text-gray-500 text-xs">
+                        Qty: {item.quantity}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right Side */}
+                  <div className="font-semibold">
+                    ${Number(item.price * item.quantity).toFixed(2)}
+                  </div>
                 </div>
               ))}
 
