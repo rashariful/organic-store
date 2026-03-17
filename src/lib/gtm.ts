@@ -7,7 +7,7 @@ declare global {
 
 export const GTM_ID = "GTM-PPPMF5X5";
 
-// Initialize GTM
+// Initialize GTM 
 export const initGTM = () => {
   if (typeof window === "undefined") return;
 
