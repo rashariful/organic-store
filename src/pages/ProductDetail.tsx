@@ -10,7 +10,7 @@ import { useStore } from '@/contexts/StoreContext';
 import { useGtmEvents } from '@/hooks/useGtmEvents';
 
 const ProductDetail = () => {
-  const { trackContentView } = useGtmEvents();
+  const { trackContentView ,trackAddToWishlist, trackAddToCart} = useGtmEvents();
 useEffect(() => {
   trackContentView({
     id: product.id,
@@ -115,8 +115,47 @@ useEffect(() => {
           </div>
 
           <Separator />
+<div className="flex gap-4">
+  <Button
+    onClick={() => {
+      addToCart(product);
 
-          <div className="flex gap-4">
+      // 🔥 ADD TO CART TRACKING
+      trackAddToCart({
+        id: product.id,
+        name: product.name,
+        price: Number(product.price.toFixed(2)),
+      });
+    }}
+    className="flex-1 bg-gradient-organic hover:shadow-organic"
+    disabled={!product.inStock}
+  >
+    <ShoppingCart className="h-4 w-4 mr-2" />
+    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+  </Button>
+
+  <Button
+    variant="outline"
+    onClick={() => {
+      addToWishlist(product);
+
+      // 🔥 WISHLIST TRACKING (ONLY IF NOT ALREADY IN WISHLIST)
+      if (!isInWishlist) {
+        trackAddToWishlist({
+          id: product.id,
+          name: product.name,
+          price: Number(product.price.toFixed(2)),
+        });
+      }
+    }}
+    className={isInWishlist ? 'text-red-500 border-red-200' : ''}
+  >
+    <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-red-500' : ''}`} />
+  </Button>
+</div>
+
+{/* old version  of buttons  */}
+          {/* <div className="flex gap-4">
             <Button
               onClick={() => addToCart(product)}
               className="flex-1 bg-gradient-organic hover:shadow-organic"
@@ -128,11 +167,12 @@ useEffect(() => {
             <Button
               variant="outline"
               onClick={() => addToWishlist(product)}
+              
               className={isInWishlist ? 'text-red-500 border-red-200' : ''}
             >
               <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-red-500' : ''}`} />
             </Button>
-          </div>
+          </div> */}
 
           <div className="grid grid-cols-2 gap-4 mt-8">
             <Card>
