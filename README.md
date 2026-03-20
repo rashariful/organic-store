@@ -1,73 +1,153 @@
-# Welcome to your Lovable project
+## Organic E-Commerce Website
 
-## Project info
+**React • Tailwind • Vite • TypeScript**
 
-**URL**: https://lovable.dev/projects/a3e4f66c-0df2-4f2e-989e-263e37a7b694
+A modern and responsive organic eCommerce website built for selling natural and organic products online. The platform focuses on clean UI, fast performance, and a smooth shopping experience for customers.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Live Website
 
-**Use Lovable**
+🌐 [https://organic.digitalagencypark.com/](https://organic.digitalagencypark.com/)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a3e4f66c-0df2-4f2e-989e-263e37a7b694) and start prompting.
+📂 GitHub Repository
+[https://github.com/rashariful/organic-store](https://github.com/rashariful/organic-store)
 
-Changes made via Lovable will be committed automatically to this repo.
+📘 Facebook Page
+[https://www.facebook.com/Digitalagencypark](https://www.facebook.com/Digitalagencypark)
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Project Overview
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+This project is a modern online store designed for selling organic products such as fresh produce, natural foods, and eco-friendly items. It provides an easy shopping experience with a responsive UI and optimized performance.
 
-Follow these steps:
+The system is built using a modern frontend stack with reusable components, ensuring scalability and maintainability.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+---
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Features
 
-# Step 3: Install the necessary dependencies.
-npm i
+* Modern eCommerce UI
+* Fully responsive design
+* Product showcase
+* Product details page
+* Order system
+* Fast loading pages
+* Clean component architecture
+* Mobile-friendly interface
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+---
+
+## Tech Stack
+
+| Technology   | Purpose              |
+| ------------ | -------------------- |
+| React.js     | Frontend Development |
+| TypeScript   | Type Safety          |
+| Vite         | Fast Build Tool      |
+| Tailwind CSS | Styling Framework    |
+| shadcn/ui    | UI Components        |
+
+---
+
+## Project Structure
+
+```
+src
+ ├── components
+ ├── pages
+ ├── hooks
+ ├── assets
+ ├── styles
+ └── utils
+```
+
+This modular structure makes the code easy to maintain and extend.
+
+---
+
+## Installation
+
+Make sure Node.js and npm are installed.
+
+**Clone Repository**
+
+```
+git clone https://github.com/rashariful/organic-store
+```
+
+**Navigate to Project Folder**
+
+```
+cd organic-store
+```
+
+**Install Dependencies**
+
+```
+npm install
+```
+
+**Run Development Server**
+
+```
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The development server will start with hot reload enabled.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## Deployment
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The project is deployed at:
+[https://organic.digitalagencypark.com/](https://organic.digitalagencypark.com/)
 
-## What technologies are used for this project?
+You can deploy this project using:
 
-This project is built with:
+* Vercel
+* Netlify
+* Cloud VPS
+* Docker environments
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+## Screenshots
 
-Simply open [Lovable](https://lovable.dev/projects/a3e4f66c-0df2-4f2e-989e-263e37a7b694) and click on Share -> Publish.
+You can add screenshots of your website here.
 
-## Can I connect a custom domain to my Lovable project?
+Example:
 
-Yes, you can!
+```
+/screenshots
+   homepage.png
+   product-page.png
+   order-page.png
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Maintained By
+
+**Digital Agency Park**
+
+A software company specializing in:
+
+* Web Application Development
+* E-commerce Platforms
+* UI/UX Design
+* Custom Software Solutions
+
+---
+
+## Contact
+
+🌐 Website [https://digitalagencypark.com](https://digitalagencypark.com)
+📘 Facebook [https://www.facebook.com/Digitalagencypark](https://www.facebook.com/Digitalagencypark)
+📧 Email [digitalagencypark@gmail.com](mailto:digitalagencypark@gmail.com)
+📞 Phone +880 1850-273117
+
+---
+
+⭐ If you like this project, please star the repository.
