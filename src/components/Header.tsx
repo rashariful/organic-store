@@ -47,14 +47,16 @@ export function Header() {
             </Link>
 
             {/* Search */}
+         
+
             <div className="hidden md:flex items-center space-x-2 flex-1 max-w-2xl mx-8">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary" />
                 <Input 
                   placeholder="Search for organic honey, ghee, oils, nuts..." 
-                  className="pl-10 h-12 bg-muted/50 border ring-primary-foreground focus-visible:ring-2 focus-visible:ring-primary"
+                  className="pl-10 h-12 bg-muted/50 border border-green-700 ring-primary-foreground focus-visible:ring-2 focus-visible:ring-primary"
                 />
-                <Button size="sm" className="absolute right-2 top-1/2 -translate-y-1/2">
+                <Button size="default" className="absolute right-2 top-1/2 -translate-y-1/2">
                   Search
                 </Button>
               </div>
