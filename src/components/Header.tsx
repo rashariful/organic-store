@@ -8,10 +8,9 @@ import { Badge } from '@/components/ui/badge';
 
 export function Header() {
   const { state, getTotalItems } = useStore();
-  console.log(state, getTotalItems)
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-white ">
       {/* Top Bar */}
       <div className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-4">

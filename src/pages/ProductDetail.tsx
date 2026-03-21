@@ -1,41 +1,48 @@
-import React, { useEffect } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
-import { ArrowLeft, Heart, ShoppingCart, Shield, Truck, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { PRODUCTS } from '@/lib/products';
-import { useStore } from '@/contexts/StoreContext';
-import { useGtmEvents } from '@/hooks/useGtmEvents';
+import React, { useEffect } from "react";
+import { useParams, Navigate } from "react-router-dom";
+import {
+  ArrowLeft,
+  Heart,
+  ShoppingCart,
+  Shield,
+  Truck,
+  Star,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { PRODUCTS } from "@/lib/products";
+import { useStore } from "@/contexts/StoreContext";
+import { useGtmEvents } from "@/hooks/useGtmEvents";
 
 const ProductDetail = () => {
-  const { trackContentView ,trackAddToWishlist, trackAddToCart} = useGtmEvents();
-useEffect(() => {
-  trackContentView({
-    id: product.id,
-    name: product.name,
-    price: product.price,
+  const { trackContentView, trackAddToWishlist, trackAddToCart } =
+    useGtmEvents();
+  useEffect(() => {
+    trackContentView({
+      id: product.id,
+      name: product.name,
+      price: product.price,
       category: product.category,
-  });
-}, []);
+    });
+  }, []);
 
   const { id } = useParams();
   const { addToCart, addToWishlist, state } = useStore();
-  
-  const product = PRODUCTS.find(p => p.id === id);
-  
+
+  const product = PRODUCTS.find((p) => p.id === id);
+
   if (!product) {
     return <Navigate to="/products" replace />;
   }
 
-  const isInWishlist = state.wishlist.some(item => item.id === product.id);
-
+  const isInWishlist = state.wishlist.some((item) => item.id === product.id);
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Button 
-        variant="ghost" 
+      <Button
+        variant="ghost"
         onClick={() => window.history.back()}
         className="mb-6"
       >
@@ -48,7 +55,11 @@ useEffect(() => {
         <div className="space-y-4">
           <div className="aspect-square overflow-hidden rounded-lg">
             <img
-              src={product.image.startsWith('/') ? product.image : `/src/assets/${product.image}`}
+              src={
+                product.image.startsWith("/")
+                  ? product.image
+                  : `/src/assets/${product.image}`
+              }
               alt={product.name}
               className="w-full h-full object-cover"
             />
@@ -64,9 +75,7 @@ useEffect(() => {
                   Certified Organic
                 </Badge>
               )}
-              <Badge variant="outline">
-                {product.category}
-              </Badge>
+              <Badge variant="outline">{product.category}</Badge>
             </div>
             <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
             <div className="flex items-center gap-4 mb-4">
@@ -80,17 +89,20 @@ useEffect(() => {
                   </span>
                 )}
               </div>
-              <span className="text-muted-foreground">
-                {product.weight}
-              </span>
+              <span className="text-muted-foreground">{product.weight}</span>
             </div>
             <div className="flex items-center gap-2 mb-6">
               <div className="flex items-center">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <Star
+                    key={i}
+                    className="h-4 w-4 fill-yellow-400 text-yellow-400"
+                  />
                 ))}
               </div>
-              <span className="text-sm text-muted-foreground">(4.8) · 124 reviews</span>
+              <span className="text-sm text-muted-foreground">
+                (4.8) · 124 reviews
+              </span>
             </div>
           </div>
 
@@ -109,53 +121,57 @@ useEffect(() => {
               {product.benefits.map((benefit, index) => (
                 <li key={index} className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-forest-green rounded-full" />
-                  <span className="text-sm text-muted-foreground">{benefit}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {benefit}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
           <Separator />
-<div className="flex gap-4">
-  <Button
-    onClick={() => {
-      addToCart(product);
+          <div className="flex gap-4">
+            <Button
+              onClick={() => {
+                addToCart(product);
 
-      // 🔥 ADD TO CART TRACKING
-      trackAddToCart({
-        id: product.id,
-        name: product.name,
-        price: Number(product.price.toFixed(2)),
-      });
-    }}
-    className="flex-1 bg-gradient-organic hover:shadow-organic"
-    disabled={!product.inStock}
-  >
-    <ShoppingCart className="h-4 w-4 mr-2" />
-    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
-  </Button>
+                // 🔥 ADD TO CART TRACKING
+                trackAddToCart({
+                  id: product.id,
+                  name: product.name,
+                  price: Number(product.price.toFixed(2)),
+                });
+              }}
+              className="flex-1 bg-gradient-organic hover:shadow-organic"
+              disabled={!product.inStock}
+            >
+              <ShoppingCart className="h-4 w-4 mr-2" />
+              {product.inStock ? "Add to Cart" : "Out of Stock"}
+            </Button>
 
-  <Button
-    variant="outline"
-    onClick={() => {
-      addToWishlist(product);
+            <Button
+              variant="outline"
+              onClick={() => {
+                addToWishlist(product);
 
-      // 🔥 WISHLIST TRACKING (ONLY IF NOT ALREADY IN WISHLIST)
-      if (!isInWishlist) {
-        trackAddToWishlist({
-          id: product.id,
-          name: product.name,
-          price: Number(product.price.toFixed(2)),
-        });
-      }
-    }}
-    className={isInWishlist ? 'text-red-500 border-red-200' : ''}
-  >
-    <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-red-500' : ''}`} />
-  </Button>
-</div>
+                // 🔥 WISHLIST TRACKING (ONLY IF NOT ALREADY IN WISHLIST)
+                if (!isInWishlist) {
+                  trackAddToWishlist({
+                    id: product.id,
+                    name: product.name,
+                    price: Number(product.price.toFixed(2)),
+                  });
+                }
+              }}
+              className={isInWishlist ? "text-red-500 border-red-200" : ""}
+            >
+              <Heart
+                className={`h-4 w-4 ${isInWishlist ? "fill-red-500" : ""}`}
+              />
+            </Button>
+          </div>
 
-{/* old version  of buttons  */}
+          {/* old version  of buttons  */}
           {/* <div className="flex gap-4">
             <Button
               onClick={() => addToCart(product)}

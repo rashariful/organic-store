@@ -12,7 +12,7 @@ export const useGtmEvents = () => {
   useEffect(() => {
     const url = location.pathname + location.search;
 
-    // console.log("📄 GTM page_view:", url);
+    console.log("📄 GTM page_view:", url);
 
     pushToDataLayer("page_view", {
       page_path: url,
