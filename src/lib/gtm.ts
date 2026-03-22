@@ -1,77 +1,65 @@
-// src/lib/gtm.ts
 declare global {
   interface Window {
     dataLayer: Record<string, any>[];
   }
 }
 
-export const GTM_ID = "GTM-PPPMF5X5";
-
-// Initialize GTM 
-export const initGTM = () => {
+export const initGTM = (gtmId: string) => {
   if (typeof window === "undefined") return;
 
-  if (document.getElementById("gtm-script")) return; // prevent duplicates
+  if (document.getElementById("gtm-script")) return;
 
-  // console.log("✅ GTM initialized with ID:", GTM_ID);
+  window.dataLayer = window.dataLayer || [];
 
   const script = document.createElement("script");
   script.id = "gtm-script";
-  script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`;
   script.async = true;
+  script.src = `https://www.googletagmanager.com/gtm.js?id=${gtmId}`;
+
   document.head.appendChild(script);
 };
 
-// Push event to dataLayer
 export const pushToDataLayer = (event: string, data?: Record<string, any>) => {
   if (typeof window === "undefined") return;
+
   window.dataLayer = window.dataLayer || [];
 
-  const payload = { event, ...data };
-  // console.log("🟡 GTM Event Pushed:", payload);
-  window.dataLayer.push(payload);
+  window.dataLayer.push({
+    event,
+    ...data,
+  });
 };
 
-
-// OLD VERSION  HERE START 
-// // 🔹 TypeScript-safe DataLayer push
+// // src/lib/gtm.ts
 // declare global {
 //   interface Window {
 //     dataLayer: Record<string, any>[];
 //   }
 // }
 
+// export const GTM_ID = "GTM-PPPMF5X5";
 
-
-
-// // src/lib/gtm.ts
-// export const GTM_ID = "GTM-P6DZZTVW"; // এখানে তোমার GTM ID দিবে
-
-// // GTM init
+// // Initialize GTM 
 // export const initGTM = () => {
 //   if (typeof window === "undefined") return;
 
-//   console.log("✅ GTM initialized with ID:", GTM_ID);
+//   if (document.getElementById("gtm-script")) return; // prevent duplicates
 
-//   // Uncomment this block in production
+//   // console.log("✅ GTM initialized with ID:", GTM_ID);
 
 //   const script = document.createElement("script");
+//   script.id = "gtm-script";
 //   script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`;
 //   script.async = true;
 //   document.head.appendChild(script);
-  
 // };
 
-// // Generic dataLayer push
-// export const pushToDataLayer = (
-//   event: string,
-//   data?: Record<string, any>
-// ) => {
+// // Push event to dataLayer
+// export const pushToDataLayer = (event: string, data?: Record<string, any>) => {
 //   if (typeof window === "undefined") return;
-
 //   window.dataLayer = window.dataLayer || [];
-//   const payload = { event, ...data };
 
-//   console.log("🟡 GTM Event Pushed:", payload); // offline testing
+//   const payload = { event, ...data };
+//   // console.log("🟡 GTM Event Pushed:", payload);
 //   window.dataLayer.push(payload);
 // };
